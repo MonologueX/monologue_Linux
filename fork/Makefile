@@ -1,7 +1,7 @@
-main:main.c
-	gcc $^ -o $@
+main:test.c
+	gcc test.c -o test
 
 .PHONY:clean
 clean:
-	rm main
+	rm test
 
