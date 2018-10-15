@@ -2,6 +2,6 @@
 
 int main()
 {
-  printf("ceshi!!!\n");
+  printf("mima!!!\n");
   return 0;
 }
