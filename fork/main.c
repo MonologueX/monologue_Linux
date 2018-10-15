@@ -9,9 +9,17 @@ int main()
   if (ret > 0)
   {
     printf("father = %d\n", getpid());
-    int status = 0;
+    int status;
     wait(&status);
-    printf("status = %d\n", status);
+    // printf("status = %d\n", status);
+    if (status & 0xff)
+    {
+      printf("进程异常终止！ 信号 = %d\n", status & 0x7f);
+    } 
+    else 
+    {
+      printf("进程正常终止！ 退出码 = %d\n", (status >> 8) & 0xff);
+    }
     while (1) 
     {
       sleep(1);
