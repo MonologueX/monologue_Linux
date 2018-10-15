@@ -9,8 +9,10 @@ int main()
   if (ret > 0)
   {
     printf("father = %d\n", getpid());
-    wait(NULL); 
-    while (1)
+    int status = 0;
+    wait(&status);
+    printf("status = %d\n", status);
+    while (1) 
     {
       sleep(1);
     }
