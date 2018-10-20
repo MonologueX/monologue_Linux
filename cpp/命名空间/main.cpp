@@ -43,11 +43,32 @@ void TestFunc4(int b)
 // 
 // }
 
-int main()
+
+////////////////////////////////// 
+// 函数重载
+int Add(int left, int right)
 {
+  return left + right;
+}
+
+double Add(double left, double right)
+{
+  return left + right;
+}
+
+char Add(char left, char right)
+{
+  return left + right;
+}
+
+void Test()
+{
+  cout<< "Test 1"<<endl;
   GetMemory();
   GetMemory(10);
+  cout<<endl;
 
+  cout<< "Test 2"<<endl;
   TestFunc1(10, 20, 30);
   TestFunc1(10, 20);
   TestFunc1(10);
@@ -55,5 +76,17 @@ int main()
   TestFunc2(10, 20, 30);
   TestFunc2(10, 20);
   TestFunc2(10);
+  cout<<endl;
+
+  cout<< "Test 3"<<endl;
+  cout<<Add(1, 2)<<endl;
+  cout<<Add(1.0, 2.1)<<endl;
+  cout<<Add('1', '2')<<endl; 
+  cout<<endl;
+}
+
+int main()
+{
+  Test();
   return 0;
 }
