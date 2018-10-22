@@ -4,6 +4,8 @@ using namespace std;
 #include <malloc.h>
 #include <unistd.h>
 
+///////////////////////////////////////// 
+// 函数 
 void* GetMemory(int size = 100)
 {
   cout<<size<<endl;
@@ -63,11 +65,13 @@ char Add(char left, char right)
 
 void Test()
 {
+  // 第一个测试
   cout<< "Test 1"<<endl;
   GetMemory();
   GetMemory(10);
   cout<<endl;
 
+  // 第二个测试 
   cout<< "Test 2"<<endl;
   TestFunc1(10, 20, 30);
   TestFunc1(10, 20);
@@ -78,6 +82,7 @@ void Test()
   TestFunc2(10);
   cout<<endl;
 
+  // 第三个测试 
   cout<< "Test 3"<<endl;
   cout<<Add(1, 2)<<endl;
   cout<<Add(1.0, 2.1)<<endl;
