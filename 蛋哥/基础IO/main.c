@@ -38,20 +38,28 @@
 
 int main()
 {
-    int fd = open("file", O_RDONLY, 0644);
+    int fd = open("file", O_WRONLY, 0644);
     if (fd < 0)
     {
         perror("open");
         return 1;
     }
-    int fd1 = open("file", O_RDONLY, 0644);
-    int fd2 = open("file", O_RDONLY, 0644);
-    int fd3 = open("file", O_RDONLY, 0644);
-    printf("fd:%d\n", fd);
-    printf("fd:%d\n", fd1);
-    printf("fd:%d\n", fd2);
-    printf("fd:%d\n", fd3);
-//    const char* msg = "hello word\n";
+    
+    int count = 10;
+    while (count--)
+    {
+        printf("hello word\n");
+        fflush(stdout);
+    }
+    close(fd);
+  //  int fd1 = open("file", O_RDONLY, 0644);
+  //  int fd2 = open("file", O_RDONLY, 0644);
+  //  int fd3 = open("file", O_RDONLY, 0644);
+  //  printf("fd:%d\n", fd);
+  //  printf("fd:%d\n", fd1);
+  //  printf("fd:%d\n", fd2);
+  //  printf("fd:%d\n", fd3);
+////    const char* msg = "hello word\n";
 //    int size = strlen(msg);
 //    char buf[64];
 //    int count = 5;
@@ -65,6 +73,6 @@ int main()
 //        printf("%s", buf);
 //    }
 //
-    close(fd);
+//    close(fd);
     return 0;
 }
