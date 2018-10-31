@@ -10,22 +10,61 @@
 #include <fcntl.h>
 #include <string.h>
 
+///////////////////////////////
+// 写
+
+//int main()
+//{
+//    int fd = open("file", O_WRONLY|O_CREAT, 0644);
+//    if (fd < 0)
+//    {
+//        perror("open");
+//        return 1;
+//    }
+//    const char* msg = "hello word\n";
+//    int count = 5;
+//        
+//    while (count--)
+//    {
+//        write(fd, msg, strlen(msg));
+//    }
+//
+//    close(fd);
+//    return 0;
+//}
+
+///////////////////////////////
+// 读
+
 int main()
 {
-    int fd = open("file", O_WRONLY|O_CREAT, 0644);
+    int fd = open("file", O_RDONLY, 0644);
     if (fd < 0)
     {
         perror("open");
         return 1;
     }
-    const char* msg = "hello word\n";
-    int count = 5;
-        
-    while (count--)
-    {
-        write(fd, msg, strlen(msg));
-    }
-
+    int fd1 = open("file", O_RDONLY, 0644);
+    int fd2 = open("file", O_RDONLY, 0644);
+    int fd3 = open("file", O_RDONLY, 0644);
+    printf("fd:%d\n", fd);
+    printf("fd:%d\n", fd1);
+    printf("fd:%d\n", fd2);
+    printf("fd:%d\n", fd3);
+//    const char* msg = "hello word\n";
+//    int size = strlen(msg);
+//    char buf[64];
+//    int count = 5;
+//    while (count--)
+//    {
+//        size_t s = read(fd, buf, size);
+//        if (s > 0)
+//        {
+//            buf[s] = 0;
+//        }
+//        printf("%s", buf);
+//    }
+//
     close(fd);
     return 0;
 }
