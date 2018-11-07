@@ -39,13 +39,45 @@ using namespace std;
 //    return 0;
 //}
 
+//int main()
+//{
+//    const int a = 10;
+//    const int& ra = a;
+//    const int& b = 10;
+//    double d = 1.4;
+//    const int& rd = d; //rd 为临时变量 
+//    
+//    return 0;
+//}
+
+//void Swap(int& left, int &right)
+//{
+//    int temp = left;
+//    left = right;
+//    right = temp;
+//}
+//
+//int main()
+//{
+//    int a = 10;
+//    int b = 20;
+//    Swap(a, b);
+//    cout << a << endl;
+//    cout << b << endl;
+//    return 0;
+//}
+
+int& TestFunc()
+{
+    int a = 10;
+    return a;
+}
+
 int main()
 {
-    const int a = 10;
-    const int& ra = a;
-    const int& b = 10;
-    double d = 1.4;
-    const int& rd = d; //rd 为临时变量 
-    
+    int& b = TestFunc();
+    cout << b << endl;
+    cout << b << endl;
+    cout << b << endl;
     return 0;
 }
