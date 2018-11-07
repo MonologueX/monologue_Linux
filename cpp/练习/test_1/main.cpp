@@ -77,7 +77,11 @@ int main()
 {
     int& b = TestFunc();
     cout << b << endl;
+    cout << &b << endl;
     cout << b << endl;
+    cout << &b << endl;
     cout << b << endl;
+    cout << &b << endl;
+     
     return 0;
 }
