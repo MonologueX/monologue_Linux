@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 #include <unistd.h>
+#include <ctype.h>
 #include <sys/wait.h>
 
 ///////////////////////////////
@@ -33,6 +34,21 @@ void Run(int argc, char* argv[])
   pid_t ret = fork();
   if (ret > 0)
   {
+      int i = 0;
+
+        //寻找重定向标志 > 
+        for (i =0; argv[i] != NULL; ++i)
+        { 
+            if(strcmp(argv[i], ">") == 0)  
+            { 
+                if(argv[i+1] == NULL) //> 后面未带参数
+                    perror("command '>'[option]?"),exit( 1);:q:；, 0664);
+                if(fd == -1)perror("open"),exit( 1);
+                //重定向操作
+                dup2(fd, 1); //dup2(oldfd, newfd);
+                close(fd);
+            }
+        }
     wait(NULL);
   }
   else if (ret == 0)
