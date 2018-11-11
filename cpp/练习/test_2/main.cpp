@@ -20,3 +20,22 @@ using namespace std;
 //    return 0;
 //}
 
+int Add(int a, int b)
+{
+    return a + b;
+}
+
+//inline int Add(int a, int b)
+//{
+//    return a + b;
+//}
+
+int main()
+{
+    int a = 1;
+    int b = 2;
+    int c = Add(a, b);
+    cout << c << endl;
+
+    return 0;
+}
