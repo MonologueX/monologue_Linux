@@ -1,6 +1,6 @@
 /***********************************
  * 文件名称:main.cpp 
- * 文件描述:类和对象练习 
+ * 文件描::类和对象练习 
  * 编译环境:Linux
  * 作者相关:心文花雨
 ***********************************/
@@ -42,9 +42,35 @@ using namespace std;
 //    s3.Print();
 //    return 0;
 //}
+class A1
+{
+    public:
+        void Set(int a)
+        {
+            m_a = a;
+        }
+
+    private:
+        int m_a;
+};
+
+
+class A2
+{
+    public:
+        void Test_A2()
+        {
+            cout << "void Test_A2()" << endl;
+        }
+};
+
+class A3
+{};
 
 int main()
 {
-    
+    cout << sizeof(A1) << endl;    
+    cout << sizeof(A2) << endl;    
+    cout << sizeof(A3) << endl;    
     return 0;
 }
