@@ -16,11 +16,12 @@ int main()
     if (id == 0)
     {
         close(fd[0]);
+        int count = 0;
         const char *msg = "hello child\n";
         while (1)
         {
-            sleep(1);
             write(fd[1], msg, strlen(msg));
+            printf("%d\n", count++);
         }
     }
     else 
@@ -29,6 +30,7 @@ int main()
         char buf[64];
         while (1)
         {
+            sleep(5);
             ssize_t s = read(fd[0], buf, sizeof(buf) - 1);
             if (s > 0)
             {
