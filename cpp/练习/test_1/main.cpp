@@ -82,6 +82,6 @@ int main()
     cout << &b << endl;
     cout << b << endl;
     cout << &b << endl;
-     
+    
     return 0;
 }
