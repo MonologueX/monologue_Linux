@@ -88,10 +88,46 @@ void TestStringReserve2()
 	cout << "capacity:" << s.capacity() << endl;
 }
 
+void TestPushBack()
+{
+    string s;
+    size_t sz = s.capacity();
+    cout << "making s grow:\n";
+    for (int i = 0; i < 100; i++)
+    {
+        s += 'c';
+        if (sz != s.capacity())
+        {
+            sz = s.capacity();
+            cout << "capacity changed: " << sz << endl;
+        }
+    }
+} 
+
+void TestSubstr()
+{
+    string url("http://www.cplusplus.com/reference/string/string/reserve/?kw=string%3A%3Areserve");
+    size_t start = url.find("://") + 3;
+    size_t end = url.find('/', start);
+
+    cout << url.substr(start, end - start) << endl;
+}
+
+void Test()
+{
+    string s;
+    cin >> s;
+    //getline(cin, s);
+    cout << s << endl;
+}
+
 int main()
 {
-	TestStringReserve1();
-    cout << endl;
-	TestStringReserve2();
+	//TestStringReserve1();
+    //cout << endl;
+	//TestStringReserve2();
+    //TestPushBack(); 
+    //TestSubstr();
+    Test();
 	return 0;
 }
