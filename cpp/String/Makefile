@@ -1,6 +1,6 @@
-main:main.cpp 
-	g++ -std=c++11 main.cpp -o main 
+string:string.cpp 
+	g++ -std=c++11 string.cpp -o string 
 
 .PHONY:clean
 clean:
-	rm -f main
+	rm -f string
