@@ -3,9 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#include <wait.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <pthread.h>
 
 void serviceIO(int sock)
 {
@@ -30,6 +32,12 @@ void serviceIO(int sock)
         }
     }
     close(sock);
+}
+
+void *service(void *arg)
+{
+    int sock = (int)arg;
+    serviceIO(sock);
 }
 
 int main(int argc, char *argv[])
@@ -74,7 +82,26 @@ int main(int argc, char *argv[])
             continue;
         }
             printf("get new link [%s:%d]...!\n", inet_ntoa(client.sin_addr), ntohs(client.sin_port));
-            serviceIO(sock);
+
+            pthread_t id;
+            pthread_create(&id, NULL, service, (void*)sock);
+            pthread_detach(id);
+           // pid_t id = fork();
+           // if (0 == id)
+           // {
+           //     close(listen_sock);
+           //     if (fork() > 0)
+           //     {
+           //         exit(0);
+           //     }
+           //     serviceIO(sock);
+           //     exit(0);
+           // }
+           // else 
+           // {
+           //     close(sock);
+           //     waitpid(id, NULL, 0);
+           // }
     }
     return 0;
 }
