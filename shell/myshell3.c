@@ -1,15 +1,21 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<stdlib.h>
-#include<wait.h>
-#include<string.h>
-#include<pwd.h>
+/////////////////////////////// 
+// 文件名称:myshell3.c
+// 文件描述:修改
+// 编译环境:Linux
+// 作者相关:心文花雨 
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <wait.h>
+#include <string.h>
+#include <pwd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <ctype.h>
-#include<sys/socket.h>
-#include<arpa/inet.h>
-#include<netdb.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 void Parse(char* input, char* output[]) // 用于将路径进行切分，最后一个/后面为当前路径
 {
@@ -80,13 +86,13 @@ int main()
         //获得当前路径
         char path[100] = {0};
         getcwd(path,sizeof(path)); //getcwd获得的是绝对路径(path里面存放的是绝对路径)
-        char* path2[100] = {0};                                                                                                             
+        char* path2[100] = {0}; 
         Parse(path,path2);
 
         char* path3 = NULL; 
         // path里面为绝对路径，将path按照/进行分割，分割的结果保存在path2里面
         // path3里面保存最后一个字符串，即相对路>径
-        int i = 0;                                                                                                                      
+        int i = 0;
         while(path2[i] !=NULL)
         {
             path3= path2[i];
