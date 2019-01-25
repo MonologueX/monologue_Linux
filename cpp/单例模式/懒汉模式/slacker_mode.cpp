@@ -10,8 +10,9 @@ class Singleton
             return &m_ps;
         }
     private:
-        Singleton(Singleton &s)
+        Singleton()
         {}
+    private: 
         static Singleton m_ps;
 };
 
