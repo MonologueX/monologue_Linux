@@ -31,7 +31,7 @@ void ClientMove(char board[ROW][COL], my_point* point);
 void ServerMove(char board[ROW][COL], my_point* point);
 
 //π≤Õ¨“∆∂Ø
-void CommonMove(char board[ROW][COL], my_point* point,char ch);
+void CommonMove(char board[ROW][COL], my_point* point, char ch);
 
 //≈–∂œ ‰”Æ
 char GameState(char board[ROW][COL], my_point* point);

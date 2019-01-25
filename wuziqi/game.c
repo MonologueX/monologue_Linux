@@ -56,6 +56,7 @@ int IsFull(char board[ROW][COL])
 	}
 	return 1;
 }
+
 //¿Í»§¶ËÒÆ¶¯
 void ClientMove(char board[ROW][COL], my_point* point)
 {
@@ -267,11 +268,11 @@ char GameState(char board[ROW][COL],my_point* point)
 	{
 		return 'e';
 	}
-	if (ColFull(board,point) == 5)
+	if (ColFull(board, point) == 5)
     {
 		return board[point->row][point->col];
 	}
-	if (RowFull(board,point) == 5)
+	if (RowFull(board, point) == 5)
     {
 		return board[point->row][point->col];
 	}

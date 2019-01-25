@@ -1,4 +1,4 @@
-﻿#include"game.h"
+﻿#include"san_game.h"
 
 int main(int argc, char*argv[])
 {
@@ -39,9 +39,9 @@ int main(int argc, char*argv[])
 			continue;
 		}
 		ssize_t s;
-		my_point point_server, point_client;
-		char board[ROW][COL];
-		Init(board, ROW, COL);
+		sanziqi sanziqi_server, point_client;
+		int array[ROW][COL];
+		Init(array);
 		int x, y;
 		while (1)
         {
@@ -52,31 +52,27 @@ int main(int argc, char*argv[])
 				close(client_sock);
 				return 0;
 			}
-			ClientMove(board, &point_client);
-			Print(board, ROW, COL);
-			if (GameState(board, &point_client) == '*')
+			PlayMove(array, &point_client);
+			Print(array);
+			if (IsWin(array, &point_client) == '*')
 			{
 				printf("client win!\n");
 				break;
 			}
-            else if (GameState(board, &point_client) == 'p')
+            else if (IsWin(array, &point_client) == 'p')
             {
 				printf("equal!\n");
 				break;
 			}
-			printf("please input: ");
-			scanf("%d%d", &x, &y);
-			point_server.row = x-1;
-			point_server.col = y-1;
-			ServerMove(board, &point_server);
-			Print(board, ROW, COL);
-			write(client_sock, (void*)&point_server, sizeof(point_server));
-			if (GameState(board, &point_client) == '#')
+			CmputerMove(array, &sanziqi_server);
+			Print(array);
+			write(client_sock, (void*)&sanziqi_server, sizeof(sanziqi_server));
+			if (IsWin(array, &point_client) == '#')
             {
 				printf("you win!\n");
 				break;
 			}
-            else if (GameState(board , &point_client) == 'p')
+            else if (IsWin(array , &point_client) == 'p')
             {
 				printf("equal! \n");
 				break;
