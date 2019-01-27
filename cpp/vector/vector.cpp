@@ -42,7 +42,6 @@ void Print(const vector<T>& v)
     cout << endl;
 }
 
-
 void Test(void)
 {
     vector<int> v1;
@@ -61,8 +60,25 @@ void Test(void)
     Print(v6);
 }
 
+void Test2()
+{
+    vector<int> v{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    for (auto it = v.rbegin(); it != v.rend() ; ++it)
+    {
+        cout << *it << " ";
+    }
+    cout << endl;
+
+    for (auto e : v)
+    {
+        cout << e << " ";
+    }
+    cout << endl;
+}
+
 int main()
 {
     Test();
+    Test2();
     return 0;
 }

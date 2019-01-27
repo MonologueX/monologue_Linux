@@ -1,0 +1,20 @@
+IO流:
+标准输入与输出 运算符重载 类型转换
+<< >>
+输入输出运算符重载
+<< 为什么任意类型(内置类型)都可输出--operator<<(内置类型) 
+>> 注意：不能接受空格和回车 getchar
+在线IO中输入和输出:
+    >>注意输入和输出格式
+    >>如何接受一行--getline(cin, str) -->返回输入流对象
+        循环输入:while(getline(cin, str))
+        类型转换
+    >>格式化输出输入 scanf printf
+文件
+1.文件分类:二进制文件文本文件
+2.C系列与文件操作的相关函数
+3.检测是否到了文件的结尾 EOF--> -1
+    12345678 十进制文件-->文件:fwrite
+    size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream);
+    size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream);
+4.关与C++ifstream ofstream o; o<<10; fCin>a;
