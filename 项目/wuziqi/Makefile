@@ -1,11 +1,11 @@
 .PHONY:all
-all:san_server san_client
+all:server client
 
 server:server.c
-	gcc san_server.c -o server
+	gcc server.c -g -o server
 client:client.c
-	gcc san_client.c -o client
+	gcc client.c -g -o client
 
 .PHONY:clean 
 clean:
-	rm -f san_client san_server
+	rm -f client server
