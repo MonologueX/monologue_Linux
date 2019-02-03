@@ -1,0 +1,1 @@
+Test1: game init is OK!
