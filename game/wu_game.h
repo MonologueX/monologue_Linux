@@ -47,7 +47,7 @@ void ComputerPlay(char map[ROW][COL], wuziqi *game);
 int Play(char map[ROW][COL], wuziqi *game);
 
 // 判断输赢
-int IsWin(char map[ROW][COL]);
+int IsWin(char map[ROW][COL], char ch);
 
 // 菜单
 void menu();

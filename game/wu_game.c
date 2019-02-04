@@ -2,12 +2,12 @@
 
 void menu()
 {
-	printf("==============================\n");
-	printf("=====       主 菜 单      ====\n");
-	printf("==============================\n");
-	printf("=====       1. play       ====\n");
-	printf("=====       0. exit       ====\n");
-	printf("==============================\n");
+	printf("=============================\n");
+	printf("====       主 菜 单      ====\n");
+	printf("=============================\n");
+	printf("====       1. play       ====\n");
+	printf("====       0. exit       ====\n");
+	printf("=============================\n");
 }
 
 //初始化棋盘
@@ -57,8 +57,22 @@ void Print(char map[ROW][COL])
 
 		for (j = 0; j < ROW; j++) 
 		{
-			putchar(map[i][j]);
-			if (j<(ROW - 1)) putchar('-');
+            if (map[i][j] == '+')
+            {
+			    putchar(map[i][j]);
+            }
+            else if (map[i][j] == BLACK_FLAG)
+            {
+                printf("%c", map[i][j]);
+            }
+            else 
+            {
+                printf("%c", map[i][j]);
+            }
+			if (j<(ROW - 1)) 
+            {
+                putchar('-');
+            }
 		}
 		putchar('\n');
 	}
@@ -565,15 +579,10 @@ int Play(char map[ROW][COL], wuziqi *game)
 	return 1;
 }
 
-int IsWin(char map[ROW][COL]) 
+int IsWin(char map[ROW][COL], char ch) 
 {
-	char m;
+	char m = ch;
 	int i, j;
-	if (player == BLACK) 
-        m = BLACK_FLAG;
-	else 
-        m = WHITE_FLAG;
-    printf("%c\n", m);
 	for (i = 0; i < COL; i++) 
 	{
 		for (j = 0; j < ROW; j++) 

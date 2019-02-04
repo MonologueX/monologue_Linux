@@ -12,7 +12,7 @@ void Game(int sock)
 		Play(map, &game_client);
 		Print(map);
 		write(sock, (void*)&game_client, sizeof(game_client));
-		if (IsWin(map, &game_client))
+		if (IsWin(map, BLACK_FLAG))
 		{
             printf("BLACK(%c) is winer!!!\n", BLACK_FLAG);
             break;
@@ -25,10 +25,10 @@ void Game(int sock)
 			return;
 		}
 		Print(map);
-		if (IsWin(map, &game_client))
+		if (IsWin(map, WHITE_FLAG))
 		{
-                printf("WHITE(%c) is winer!!!\n", WHITE_FLAG);
-                break;
+            printf("WHITE(%c) is winer!!!\n", WHITE_FLAG);
+            break;
         }
 	}
 }

@@ -6,4 +6,4 @@ client:wu_client.c
 	gcc wu_client.c -o client
 .PHONY:clean
 clean:
-	rm -f server client
+	rm -f server client test.c

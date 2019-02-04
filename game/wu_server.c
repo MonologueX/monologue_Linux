@@ -53,7 +53,7 @@ int main(int argc, char*argv[])
 			}
             map[game_client.row][game_client.col] = BLACK_FLAG;
 			Print(map);
-			if (IsWin(map))
+			if (IsWin(map, BLACK_FLAG))
 			{
                 printf("BLACK(%c) is winer!!!\n", BLACK_FLAG);
                 break;
@@ -62,7 +62,7 @@ int main(int argc, char*argv[])
 			ComputerPlay(map, &game_server);
 		    Print(map);
 		    write(client_sock, (void*)&game_server, sizeof(game_server));
-		    if (IsWin(map))
+		    if (IsWin(map, WHITE_FLAG))
 		    {
                 printf("WHITE(%c) is winer!!!\n", WHITE_FLAG);
                 break;
