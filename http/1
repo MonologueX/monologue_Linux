@@ -72,18 +72,13 @@ static int getLine(int sock, char line[], int size)
     return i;
 }
 
-static void clearHeader(int sock)
+static void lineHeader(int sock)
 {
     char line[MAX];
     do 
     {
         getLine(sock, line, sizeof(line));
     }while(strcmp("\n", line));
-}
-
-static void echoErrMsg(int sock, int status_code)
-{
-
 }
 
 void *handlerRequest(void *arg)
