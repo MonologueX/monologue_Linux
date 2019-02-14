@@ -20,7 +20,15 @@ void ListNodeInit(ListNode **ppFirst)
 // 销毁
 void ListNodeDestory(ListNode **ppFirst)
 {
-    *ppFirst = NULL;
+    ListNode *cur = *ppFirst;
+    ListNode *del = *ppFirst;
+    while (cur)
+    {
+        cur = cur->_next;
+        free(del);
+        del = cur;
+    }
+    printf("销毁成功\n");
 }
 
 // 头部插入
@@ -182,6 +190,7 @@ void Test()
     Print(first);
     ListNode *cur = Find(first, 4);
     printf("%d\n", cur->_data);
+    ListNodeDestory(&first);
 }
 
 int main()
