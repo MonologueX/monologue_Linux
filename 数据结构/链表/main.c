@@ -10,20 +10,20 @@ typedef struct ListNode
     struct ListNode *_next;
 }ListNode;
 
+// 初始化
 void ListNodeInit(ListNode **ppFirst)
 {
     assert(ppFirst != NULL);
     *ppFirst = NULL;
 }
 
+// 销毁
 void ListNodeDestory(ListNode **ppFirst)
 {
     *ppFirst = NULL;
 }
 
-/*
- * 函数功能:插入
-*/
+// 头部插入
 void ListNodePushFront(ListNode **ppFirst, DataType data)
 {
     assert(ppFirst != NULL);
@@ -34,6 +34,7 @@ void ListNodePushFront(ListNode **ppFirst, DataType data)
     *ppFirst = NewNode;
 }
 
+// 尾部插入
 void ListNodePushBack(ListNode **ppFirst, DataType data)
 {
     assert(ppFirst != NULL);
@@ -55,6 +56,7 @@ void ListNodePushBack(ListNode **ppFirst, DataType data)
     cur->_next = NewNode;
 }
 
+// 中间插入
 void ListNodeInsert(ListNode **ppFirst, size_t pos, DataType data)
 {
     if (1 == pos)
@@ -75,6 +77,7 @@ void ListNodeInsert(ListNode **ppFirst, size_t pos, DataType data)
     cur->_next = NewNode;
 }
 
+// 头部删除
 void ListNodePopFront(ListNode **ppFirst)
 {
     assert(ppFirst != NULL);
@@ -86,6 +89,7 @@ void ListNodePopFront(ListNode **ppFirst)
     del = NULL;
 }
 
+// 尾部删除
 void ListNodePopBack(ListNode **ppFirst)
 {
     assert(ppFirst != NULL);
@@ -108,7 +112,43 @@ void ListNodePopBack(ListNode **ppFirst)
     free(del);
     del = NULL;
 }
-///////////////////////////////
+
+// 中间删除
+void ListNodePop(ListNode **ppFirst, size_t pos)
+{
+    assert(ppFirst != NULL);
+    assert(*ppFirst != NULL);
+
+    if (1 == pos)
+    {
+        ListNodePopFront(&(*ppFirst));
+        return;
+    }
+    ListNode *cur = *ppFirst;
+    while (pos > 2)
+    {
+        cur = cur->_next;
+        pos--;
+    }
+    ListNode *del = cur->_next;
+    cur->_next = del->_next;
+    free(del);
+    del = NULL;
+}
+
+// 查找
+ListNode *Find(ListNode *first, DataType data)
+{
+    for (ListNode *cur = first; cur != NULL; cur = cur->_next)
+    {
+        if (data == cur->_data)
+        {
+            return cur;
+        }
+    }
+    return NULL;
+}
+/////////////////////////////// 
 // 测试
 void Print(ListNode *pFirst)
 {
@@ -127,40 +167,7 @@ void Print(ListNode *pFirst)
     }
 }
 
-void TestPopFront()
-{
-    ListNode *first;
-    ListNodeInit(&first);
-
-    ListNodePushFront(&first, 1);
-    ListNodePushFront(&first, 2);
-    ListNodePushFront(&first, 3);
-    ListNodePushFront(&first, 4);
-    ListNodePushFront(&first, 5);
-    ListNodePushFront(&first, 6);
-    Print(first);
-
-    ListNodePopFront(&first);
-    Print(first);
-    ListNodePopFront(&first);
-    Print(first);
-}
-
-void TestPushFront()
-{
-    ListNode *first;
-    ListNodeInit(&first);
-
-    ListNodePushFront(&first, 1);
-    ListNodePushFront(&first, 2);
-    ListNodePushFront(&first, 3);
-    ListNodePushFront(&first, 4);
-    ListNodePushFront(&first, 5);
-    ListNodePushFront(&first, 6);
-    Print(first);
-}
-
-void TestPushBack()
+void Test()
 {
     ListNode *first;
     ListNodeInit(&first);
@@ -168,53 +175,17 @@ void TestPushBack()
     ListNodePushBack(&first, 1);
     ListNodePushBack(&first, 2);
     ListNodePushBack(&first, 3);
-    ListNodePushBack(&first, 4);
-    ListNodePushBack(&first, 5);
-    ListNodePushBack(&first, 6);
-    Print(first);
-}
-void TestPopBack()
-{
-    ListNode *first;
-    ListNodeInit(&first);
-
-    ListNodePushBack(&first, 1);
-    ListNodePushBack(&first, 2);
-    ListNodePushBack(&first, 3);
-    ListNodePushBack(&first, 4);
-    ListNodePushBack(&first, 5);
-    ListNodePushBack(&first, 6);
-    Print(first);
-    ListNodePopBack(&first);
-    Print(first);
-    ListNodePopBack(&first);
-    Print(first);
-}
-
-
-void TestInsert()
-{
-    ListNode *first;
-    ListNodeInit(&first);
-
-    ListNodeInsert(&first, 1, 1);
-    ListNodePushBack(&first, 3);
-    Print(first);
-    ListNodeInsert(&first, 2, 2);
-    Print(first);
     ListNodePushBack(&first, 5);
     ListNodePushBack(&first, 6);
     Print(first);
     ListNodeInsert(&first, 4, 4);
-    ListNodeInsert(&first, 7, 7);
     Print(first);
+    ListNode *cur = Find(first, 4);
+    printf("%d\n", cur->_data);
 }
+
 int main()
 {
-    // TestPushFront();
-    // TestPushBack();
-    // TestPopFront();
-    // TestPopBack();
-    TestInsert();
+    Test();
     return 0;
 }
