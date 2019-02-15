@@ -1,5 +1,5 @@
-#define MAXSIZE 10
-typedef int DataType;
+#define MAXSIZE 100
+typedef char DataType;
 typedef struct Stack
 {
     DataType _array[MAXSIZE];
