@@ -1,62 +1,197 @@
-//#include "Compress.h"
-//#include "Huffman.h"
+#define _CRT_SECURE_NO_WARNINGS
+
+#include "Compress.h"
 #include <iostream>
+#include <assert.h>
+#include <string.h>
+#include <algorithm>
 #include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+using namespace std;
+
 #define READ_MAXSIZE 1024
-int m_informations[256] = {0};
 
-int compress(const std::string& compress_name)
+std::string Compress::GetFileExtensio(const std::string& CompressName)
 {
-    //typedef HuffmanNode<CharInformation>* Node;
-    ///////////////////////////////////////////////
-    //  1.è·å–æºå­—ç¬¦å‡ºç°æ¬¡æ•°
-    ///////////////////////////////////////////////
-    FILE *fin = fopen(compress_name.c_str(), "rb");
-    if (NULL == fin)
-    {
-        std::cout << "æ‰“å¼€æ–‡ä»¶å¤±è´¥" << std::endl;
-        return -1;
-    }
-    std::cout << "æ‰“å¼€æ–‡ä»¶æˆåŠŸ" << std::endl;
+	size_t pos = CompressName.find_last_of('.');
+	return CompressName.substr(pos);
+}
 
-    char ReadBUff[READ_MAXSIZE];
-    size_t SourceCount = 0;
-    while (1)
-    {
-        size_t ReadSize = fread(ReadBUff, 1, 1024, fin);
-        if (0 == ReadSize)
-        {
-            std::cout << "è¯»å–æ–‡ä»¶å¤±è´¥" << std::endl;
-            return -1;
-        }
-        std::cout << "è¯»å–æˆåŠŸï¼š[ReadSize] = " << ReadSize << std::endl;
+std::string Compress::GetFilepath(const std::string& CompressName)
+{
+	size_t pos = CompressName.find_last_of('.');
+	return CompressName.substr(0, pos);
+}
 
-        for (size_t i = 0; i < ReadSize; i++)
-        {
-            //m_informations[(unsigned char)ReadBUff[i]].m_count++;
-            m_informations[ReadBUff[i]]++;
-            SourceCount++;
-        }
-    }
-    std::cout << "æºæ–‡ä»¶å‡ºç°å­—ç¬¦æ€»æ•°" << std::endl;
-    ///////////////////////////////////////////////
-    //  2.åˆ›å»ºå“ˆå¤«æ›¼æ ‘
-    ///////////////////////////////////////////////
+int Compress::GetHuffmanCode(Node root)
+{
+	if (nullptr == root)
+	{
+		return -1;
+	}
+	Node cur = root;
+	Node Parent = cur->m_parent;
+	std::string& code = m_informations[(unsigned char)cur->m_weight.m_ch].m_code;
+	while (Parent)
+	{
+		if (Parent->m_left == cur)
+		{
+			code += '0';
+		}
+		else
+		{
+			code += '1';
+		}
+		cur = Parent;
+		Parent = cur->m_parent;
+	}
+	reverse(code.begin(), code.end());
+	GetHuffmanCode(root->m_left);
+	GetHuffmanCode(root->m_right);
+	return 0;
+}
 
-    //////////////////////////////////////////////
-    //  3.æ ¹æ®Huffmanæ ‘æ¥è·å–Huffmanç¼–ç 
-    ///////////////////////////////////////////////
-    
-    ///////////////////////////////////////////////
-    //  4.
-    ///////////////////////////////////////////////
+int Compress::compress(const std::string& CompressName)
+{
+	///////////////////////////////////////////////
+	//  1.»ñÈ¡Ô´×Ö·û³öÏÖ´ÎÊı
+	///////////////////////////////////////////////
+	FILE *fin = fopen(CompressName.c_str(), "rb");
+	if (NULL == fin)
+	{
+		std::cout << "´ò¿ªÎÄ¼şÊ§°Ü" << std::endl;
+		return -1;
+	}
+	std::cout << "´ò¿ªÎÄ¼ş³É¹¦" << std::endl;
+
+	char ReadBuff[READ_MAXSIZE];
+	size_t SourceCount = 0;
+	while (1)
+	{
+		size_t ReadSize = fread(ReadBuff, 1, 1024, fin);
+		if (0 == ReadSize)
+		{
+			std::cout << "¶ÁÈ¡Íê±Ï" << std::endl;
+			break;
+		}
+		std::cout << "¶ÁÈ¡³É¹¦£º[ReadSize] = " << ReadSize << std::endl;
+
+		for (size_t i = 0; i < ReadSize; i++)
+		{
+			m_informations[(unsigned char)ReadBuff[i]].m_count++;
+			std::cout << m_informations[(unsigned char)ReadBuff[i]].m_count << " ";
+			SourceCount++;
+		}
+	}
+	//std::cout << "Ô´ÎÄ¼ş³öÏÖ×Ö·û×ÜÊı" << SourceCount << std::endl;
+	for (size_t i = 0; i < 256 && m_informations[(unsigned char)ReadBuff[i]].m_count != 0; i++)
+		std::cout << m_informations[i].m_count << " ";
+	std::cout << std::endl;
+	///////////////////////////////////////////////
+	//  2.´´½¨¹ş·òÂüÊ÷
+	///////////////////////////////////////////////
+
+	HuffmanTree<CharInformation> hf((m_informations));
+
+	//////////////////////////////////////////////
+	//  3.¸ù¾İHuffmanÊ÷À´»ñÈ¡Huffman±àÂë
+	///////////////////////////////////////////////
+	GetHuffmanCode(hf.GetRoot());
+
+	///////////////////////////////////////////////
+	//  4.ÓÃÃ¿¸ö×Ö·ûµÄ±àÂë¸ÄĞ´Ô´ÎÄ¼ş
+	///////////////////////////////////////////////
+	Head head;
+	head.FileExtension = GetFileExtensio(CompressName);
+	for (size_t i = 0; i < 256 && m_informations[i].m_count != 0; i++)
+	{
+		head.Code += m_informations[i].m_ch;//±£´æ×Ö·û
+		head.Code += ':';
+		// itoa((int)m_informations[i].m_count, head.StrCount, 10);
+		// Windows ¿ÉÒÔÓÃ itoa
+		sprintf(head.StrCount, "%d", (int)m_informations[i].m_count);
+		head.Code += head.StrCount;
+		head.Code += '\n';
+		head.LineCount++;
+	}
+	std::string HeadInformation;
+	HeadInformation += head.FileExtension;
+	HeadInformation += '\n';
+	//itoa(head.LineCount, head.StrCount, 10);
+	sprintf(head.StrCount, "%d", (int)head.LineCount);
+	HeadInformation += head.StrCount;
+	HeadInformation += '\n';
+	HeadInformation += head.Code;
+	string  compressfile = GetFilepath(CompressName);//»ñÈ¡ÎÄ¼şÇ°×º
+	compressfile += ".ggzip";//È»ºóÔÚÇ°×ººóÃæ¼ÓÉÏÑ¹ËõÖ®ºóµÄºó×º
+	FILE* fout = fopen(compressfile.c_str(), "wb");
+	assert(fout);
+	std::cout << "Ñ¹ËõÃûÒÑ¾­»ñÈ¡" << std::endl;
+	char *WriteBuff = new char[READ_MAXSIZE];
+	char pos = 0;
+	char ptr = 0;
+	size_t WriteSize = 0;
+	fseek(fin, 0, SEEK_SET);
+
+	int CompreeCount = 0;
+
+	while (true)
+	{
+		size_t readsize = fread(ReadBuff, 1, READ_MAXSIZE, fin);
+		if (0 == readsize)
+		{
+			break;
+		}
+		for (size_t i = 0; i < readsize; ++i)
+		{
+			string& code = m_informations[(unsigned char)ReadBuff[i]].m_code;
+			for (size_t j = 0; j < code.size(); ++j)
+			{
+				pos++;
+				if ('1' == code[j])
+				{
+					ptr |= 1;
+				}
+				else
+				{
+					ptr |= 0;
+				}
+				if (pos == 8)
+				{
+					WriteBuff[WriteSize++] = ptr;
+					ptr = 0;
+					if (READ_MAXSIZE == WriteSize)
+					{
+						fwrite(WriteBuff, 1, READ_MAXSIZE, fout);
+						WriteSize = 0;
+					}
+					CompreeCount++;
+					pos = 0;
+				}
+				ptr <<= 1;
+			}
+		}
+	}
+	//Èç¹ûÃ»Âú8¸ö±ÈÌØÎ»
+	if (pos < 8)
+	{
+		WriteBuff[WriteSize++] = (ptr << (8 - pos));
+		CompreeCount++;
+	}
+	fwrite(WriteBuff, 1, WriteSize, fout);
+	fclose(fin);
+	fclose(fout);
+	cout << "Ñ¹ËõÁËµÄ×Ö·û¸öÊı£º" << CompreeCount << endl;
+	delete[] ReadBuff;
+	delete[] WriteBuff;
 }
 
 int main()
 {
-    compress("1.txt");
+	Compress c;
+	c.compress("1.txt");
+	return 0;
 }

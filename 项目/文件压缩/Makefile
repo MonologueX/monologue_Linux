@@ -1,8 +1,6 @@
-.PHONY:all
-all:main
-main:main.cpp 
-	g++ -std=c++11 main.cpp -o main 
+Compress:Compress.cpp 
+	g++ -std=c++11 Compress.cpp -o Compress -g
 
 .PHONY:clean
 clean:
-	rm -f main
+	rm -f Compress 
