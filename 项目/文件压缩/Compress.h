@@ -61,4 +61,7 @@ private:
 	std::string GetFilepath(const std::string& CompressName);
 	std::vector<CharInformation> m_informations;
 };
+
+
+void ReadLine(FILE*fin, std::string& StrInformation);
 #endif

@@ -75,10 +75,10 @@ private:
 		while (q.size() > 1)
 		{
 			PNode pLeft = q.top();
-			std::cout << "Left:" << pLeft->m_weight.m_count << std::endl;
+			//std::cout << "Left:" << pLeft->m_weight.m_count << std::endl;
 			q.pop();
 			PNode pRight = q.top();
-			std::cout << "Right:" << pRight->m_weight.m_count << std::endl;
+			//std::cout << "Right:" << pRight->m_weight.m_count << std::endl;
 			q.pop();
 
 			PNode pParent = new Node(pRight->m_weight + pLeft->m_weight);
